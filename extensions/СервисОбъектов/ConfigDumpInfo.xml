@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ConfigDumpInfo xmlns="http://v8.1c.ru/8.3/xcf/dumpinfo" xmlns:xen="http://v8.1c.ru/8.3/xcf/enums" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" format="Hierarchical" version="2.17">
+	<ConfigVersions>
+		<Metadata name="Configuration.СервисОбъектов" id="b6e6d91a-c364-41bc-b1a4-734a204fe3af" configVersion="6434f66c886dc116ae23718d299c7142967e1248"/>
+		<Metadata name="CommonModule.СервисОбъектовДанные" id="8db23f27-bbdf-4346-87b5-48ca82197b52" configVersion="3f575feee00a56936c4b8f24273e076dc4975a4e"/>
+		<Metadata name="CommonModule.СервисОбъектовДанные.Module" id="8db23f27-bbdf-4346-87b5-48ca82197b52.0" configVersion="49ef79ac820429abe2a57db780b24a2842ec9b6c"/>
+		<Metadata name="CommonModule.СервисОбъектовЗначения" id="d959b1bd-305f-4ebb-9c2a-6adbf7f0a885" configVersion="7cf11017578286703e00c98c19143338f1b12ef5"/>
+		<Metadata name="CommonModule.СервисОбъектовЗначения.Module" id="d959b1bd-305f-4ebb-9c2a-6adbf7f0a885.0" configVersion="6d5f13daebd7db72542e2dca350fffb181453e00"/>
+		<Metadata name="CommonModule.СервисОбъектовМетаданные" id="29ec2f0d-c759-4015-8ab7-9c68530ceb60" configVersion="2d4cf89984c0aec2b722497cc8649af0a94403ad"/>
+		<Metadata name="CommonModule.СервисОбъектовМетаданные.Module" id="29ec2f0d-c759-4015-8ab7-9c68530ceb60.0" configVersion="b7ad53e3576480a48de211b3e9fb8afebfe78262"/>
+		<Metadata name="CommonModule.СервисОбъектовСервис" id="39dc006e-facb-4691-bcd2-a46cd4eb3739" configVersion="853dbc268d53c6baabcf62e3464f5dcfe01cbc87"/>
+		<Metadata name="CommonModule.СервисОбъектовСервис.Module" id="39dc006e-facb-4691-bcd2-a46cd4eb3739.0" configVersion="c1d50dce54d8b0de33f271adf1bf1b22723ef802"/>
+		<Metadata name="HTTPService.СервисОбъектов" id="de8e5091-82c8-49fa-a52b-9529994566b4" configVersion="6a586ebc2a15d98ceaf85b4d664e8c8e082524f0"/>
+		<Metadata name="HTTPService.СервисОбъектов.Module" id="de8e5091-82c8-49fa-a52b-9529994566b4.0" configVersion="09d9892ff50a0538d4996ed470cc2b4903f308d8"/>
+		<Metadata name="HTTPService.СервисОбъектов.URLTemplate.Типы" id="0e2af0f1-28e8-43b0-9712-9b751d1654fc" configVersion="2b9b339d72ffad1e7cbae60889fc6993838d041c"/>
+		<Metadata name="HTTPService.СервисОбъектов.URLTemplate.Типы.Method.Получить" id="89be6c61-cba9-47a0-9853-6d1e1432c555" configVersion="b22cf43b540380253764d6624c652efb1d953607"/>
+		<Metadata name="HTTPService.СервисОбъектов.URLTemplate.ОписаниеТипа" id="8887ef7c-d9fc-4583-9951-b4ce9750e81b" configVersion="ea9ec3730ffa0ee0f89ee70f927b4f37cd39d754"/>
+		<Metadata name="HTTPService.СервисОбъектов.URLTemplate.ОписаниеТипа.Method.Получить" id="a1825877-53ec-473a-bf3c-9a5e9631f047" configVersion="e4d6243927ac87ee19eee2ee8b3737790fd2e983"/>
+		<Metadata name="HTTPService.СервисОбъектов.URLTemplate.Поиск" id="f5784f9a-f001-45af-b0bf-eb13bdd0bd36" configVersion="ff557a6015922c6ac1d7db2926ac80ee80493b5f"/>
+		<Metadata name="HTTPService.СервисОбъектов.URLTemplate.Поиск.Method.Получить" id="ddccea63-e8c9-4d6c-ade9-15048bf71099" configVersion="ce58e1b366c64432347b6b7182da0404191c4951"/>
+		<Metadata name="HTTPService.СервисОбъектов.URLTemplate.Объект" id="6fa881f3-1584-4eb4-b1a2-43cf31ee36c4" configVersion="00cd5334392788ac7a8631d0e075178652b0dd19"/>
+		<Metadata name="HTTPService.СервисОбъектов.URLTemplate.Объект.Method.Получить" id="aba5c476-52e7-4677-b29e-e9d1062aa0b2" configVersion="c54588be95a5b59a9aef84b1d194477a34ba97e0"/>
+		<Metadata name="HTTPService.СервисОбъектов.URLTemplate.Объект.Method.Создать" id="2dc81788-4b6f-4288-9a4d-c569ff2a719d" configVersion="a0e77a69379dfc3428eebbf48f7304dca5f702ed"/>
+	</ConfigVersions>
+</ConfigDumpInfo>
