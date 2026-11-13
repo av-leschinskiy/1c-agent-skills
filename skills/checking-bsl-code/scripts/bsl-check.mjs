@@ -6,7 +6,7 @@
 
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { createWriteStream, existsSync, mkdirSync, readdirSync, readFileSync, renameSync, rmSync, statSync } from 'node:fs';
+import { chmodSync, createWriteStream, existsSync, mkdirSync, readdirSync, readFileSync, renameSync, rmSync, statSync } from 'node:fs';
 import { homedir, platform } from 'node:os';
 import { basename, dirname, join, resolve, sep } from 'node:path';
 import { Readable } from 'node:stream';
@@ -115,9 +115,29 @@ function unzip(zip, dir) {
     : [['tar', ['-xf', zip, '-C', dir]]];
   for (const [cmd, cmdArgs] of tries) {
     const run = spawnSync(cmd, cmdArgs, { stdio: 'ignore' });
-    if (!run.error && run.status === 0) return;
+    if (!run.error && run.status === 0) {
+      restoreExecutable(dir);
+      return;
+    }
   }
   fail(`не распаковать ${zip}: нужен ${tries.map(([c]) => c).join(' или ')}`);
+}
+
+// unzip из Python и часть других распаковщиков теряют права: лаунчер и Java сборки
+// остаются без флага исполнения. Возвращаем его файлам в bin/, MacOS/ и jspawnhelper.
+function restoreExecutable(dir) {
+  if (platform() === 'win32') return;
+  const stack = [dir];
+  while (stack.length > 0) {
+    const current = stack.pop();
+    for (const entry of readdirSync(current, { withFileTypes: true })) {
+      const path = join(current, entry.name);
+      if (entry.isDirectory()) stack.push(path);
+      else if (['bin', 'MacOS'].includes(basename(current)) || entry.name === 'jspawnhelper') {
+        chmodSync(path, statSync(path).mode | 0o755);
+      }
+    }
+  }
 }
 
 function findLauncher(dir) {
@@ -128,7 +148,7 @@ function findLauncher(dir) {
     for (const entry of readdirSync(current, { withFileTypes: true })) {
       const path = join(current, entry.name);
       if (entry.isDirectory()) stack.push(path);
-      else if (names.includes(entry.name) && (platform() === 'win32' || statSync(path).mode & 0o111)) return path;
+      else if (names.includes(entry.name) && (platform() === 'win32' || ['bin', 'MacOS'].includes(basename(current)))) return path;
     }
   }
   return undefined;
@@ -155,6 +175,7 @@ async function resolveServer(explicit) {
   if (!asset) fail(`нет сборки BSL LS для ${platform()}; поставьте Java 17+`);
   const imageDir = join(cache, 'image');
   let launcher = existsSync(imageDir) ? findLauncher(imageDir) : undefined;
+  if (launcher) restoreExecutable(imageDir);
   if (!launcher) {
     const zip = join(cache, asset.name);
     await download(asset, zip);
