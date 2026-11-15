@@ -19,8 +19,11 @@ npm-пакеты и копирование файлов не использов�
   каталогах скиллов — тогда это не подключение, а обновление: [update.md](update.md).
 - Стоит ли у харнесса плагин Superpowers (список плагинов харнесса; у Claude Code —
   `/plugin`, у Codex — `/plugins`). Если стоит — спросить человека: убрать плагин и
-  подключить Superpowers из клона (версия, проверенная со скиллами 1С) или оставить плагин
-  и пропустить ссылки на Superpowers в шаге 2. Два источника одних скиллов расходятся.
+  подключить Superpowers клоном по шагу 1 (обновляется через git вместе с набором) или
+  оставить плагин и пропустить Superpowers в шагах 1 и 2. Два источника одних скиллов
+  расходятся.
+- Superpowers уже подключён клоном или подмодулем (URL `obra/superpowers` в `.gitmodules`,
+  клон `~/.agents/vendor/superpowers`) — использовать его, второй не заводить.
 - Прочитать `AGENTS.md` (или `CLAUDE.md`) проекта. Если в проекте уже есть свой способ
   работать с 1С — скрипт или CLI для загрузки расширений, файл с адресом базы, правила
   каталогов, — команды ниже выполняются **через него**, а не литералами из этого файла.
@@ -36,22 +39,24 @@ npm-пакеты и копирование файлов не использов�
 
 ```bash
 git submodule add https://github.com/av-leschinskiy/1c-agent-skills.git vendor/1c-agent-skills
-git submodule update --init --recursive vendor/1c-agent-skills
+git submodule add -b main https://github.com/obra/superpowers.git vendor/superpowers
 # или для всех проектов:
-git clone --recurse-submodules https://github.com/av-leschinskiy/1c-agent-skills.git ~/.agents/vendor/1c-agent-skills
+git clone https://github.com/av-leschinskiy/1c-agent-skills.git ~/.agents/vendor/1c-agent-skills
+git clone https://github.com/obra/superpowers.git ~/.agents/vendor/superpowers
 ```
 
-Внутри клона — вложенный подмодуль `vendor/superpowers` ([obra/superpowers](https://github.com/obra/superpowers)
-на ревизии, проверенной со скиллами 1С); без `--recursive` он пустой.
+[Superpowers](https://github.com/obra/superpowers) — отдельный клон рядом с этим
+репозиторием, последняя версия ветки `main` апстрима (выпущенные релизы; `dev` — их
+разработка). Обновляется вместе с набором по [update.md](update.md).
 
-Дальше `<клон>` — путь к нему.
+Дальше `<клон>` — путь к этому репозиторию, `<superpowers>` — к клону Superpowers.
 
 ## 2. Скиллы
 
 Скиллу `checking-bsl-code` нужен Node.js 22+; Java не обязательна — без неё скрипт
 скачает сборку анализатора со встроенной Java.
 
-Для каждого каталога `<клон>/skills/<имя>` и `<клон>/vendor/superpowers/skills/<имя>`
+Для каждого каталога `<клон>/skills/<имя>` и `<superpowers>/skills/<имя>`
 (второе — если Superpowers не оставлен плагином, шаг 0) создать ссылку `<имя>` в каталоге
 скиллов своего харнесса — проектном при подмодуле, пользовательском при клоне для всех
 проектов:
@@ -151,10 +156,10 @@ Node.js 22+, Java 17+ и установленная платформа 1С на 
 копия устареет при первом обновлении.
 
 ```markdown
-Внешние инструменты 1С (скиллы 1С и Superpowers, MCP `onec-objects` и `bsl-platform`,
-расширение `СервисОбъектов`) — подмодуль `vendor/1c-agent-skills`, файлы в нём не править.
-Подключение и обновление — `vendor/1c-agent-skills/docs/`. После клонирования проекта:
-`git submodule update --init --recursive`.
+Внешние инструменты 1С (скиллы, MCP `onec-objects` и `bsl-platform`, расширение
+`СервисОбъектов`) — подмодуль `vendor/1c-agent-skills`, скиллы Superpowers — подмодуль
+`vendor/superpowers`; файлы в них не править. Подключение и обновление —
+`vendor/1c-agent-skills/docs/`. После клонирования проекта: `git submodule update --init`.
 
 Перед задачей на доработку прочитать порядок работы —
 `vendor/1c-agent-skills/docs/workflow.md`.
@@ -168,9 +173,9 @@ Node.js 22+, Java 17+ и установленная платформа 1С на 
 
 ## 6. Итог человеку
 
-- Что подключено: ревизия клона (`git -C <клон> log -1 --oneline`) и Superpowers
-  (`git -C <клон> submodule status`), ссылки, записи MCP, загружено ли расширение; что
-  пропущено и почему.
+- Что подключено: ревизии клона и Superpowers (`git -C <путь> log -1 --oneline`; у
+  Superpowers ещё `git -C <superpowers> describe --tags`), ссылки, записи MCP, загружено
+  ли расширение; что пропущено и почему.
 - **Начать новую сессию агента** — скиллы и MCP харнесс читает при старте.
 - Изменения в проекте показать (`git status`) и закоммитить по правилам проекта, если
   человек просит.
