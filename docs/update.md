@@ -15,7 +15,7 @@
    путь подмодуля в имени ключа (`submodule.<путь>.url`).
 2. **Клон для всех проектов:** `~/.agents/vendor/1c-agent-skills`.
 3. **По ссылкам скиллов:** `readlink` у каталогов `testing-with-yaxunit`,
-   `testing-with-vanessa`, `checking-bsl-code` в каталогах скиллов харнесса
+   `testing-with-vanessa`, `checking-bsl-code`, `brainstorming` в каталогах скиллов харнесса
    (таблица в [install.md](install.md#2-скиллы)) — ссылка ведёт в клон.
 
 Ничего не нашлось — подключения нет: [install.md](install.md).
@@ -41,18 +41,24 @@ git -C <клон> status --porcelain
 
   ```bash
   git -C <клон> pull --ff-only
+  git -C <клон> submodule update --init --recursive
   ```
 
 - **Подмодуль** (в нём отсоединённый HEAD, `pull` не годится):
 
   ```bash
   git submodule update --init --remote <путь подмодуля>
+  git -C <путь подмодуля> submodule update --init --recursive
   ```
+
+  Вторая команда ставит Superpowers на ревизию, закреплённую в клоне. `--remote` вместе
+  с `--recursive` не писать: так Superpowers уедет на свою последнюю ревизию, не
+  проверенную со скиллами 1С.
 
   В проекте появится изменённая ревизия подмодуля — её коммит в шаге 5.
 
 - **Коллега уже обновил подмодуль**, а человек подтянул проект и просит «обновиться»:
-  `git submodule update --init <путь подмодуля>` — встаёт ревизия из проекта, без `--remote`.
+  `git submodule update --init --recursive <путь подмодуля>` — встаёт ревизия из проекта, без `--remote`.
   `OLD` в этом случае — прежняя ревизия подмодуля из `git diff` проекта или вывода `git pull`.
 
 `HEAD` не изменился — обновлять нечего: сказать человеку и закончить.
@@ -70,11 +76,14 @@ git -C <клон> log --oneline $OLD..HEAD
 | --- | --- |
 | `docs/install.md` | перечитать его: в подключении мог появиться новый шаг — выполнить его для уже подключённого |
 | `skills/<имя>/…` | ничего — ссылки смотрят в клон |
-| новый каталог `skills/<имя>` | создать для него ссылку, как в [install.md](install.md#2-скиллы) |
-| удалён каталог `skills/<имя>` | удалить ссылку на него: она теперь битая (`find <каталог скиллов> -xtype l`); чужие битые ссылки не трогать |
+| новый каталог `skills/<имя>` или `vendor/superpowers/skills/<имя>` | создать для него ссылку, как в [install.md](install.md#2-скиллы) |
+| удалён каталог `skills/<имя>` или `vendor/superpowers/skills/<имя>` | удалить ссылку на него: она теперь битая (`find <каталог скиллов> -xtype l`); чужие битые ссылки не трогать |
 | `mcp/objects/` | пересобрать: `npm --prefix <клон>/mcp/objects ci && npm --prefix <клон>/mcp/objects run build` |
 | `extensions/СервисОбъектов/` | загрузить расширение в базу заново ([install.md, шаг 3.2](install.md#3-mcp-сервер-onec-objects)) и проверить `GET …/hs/objects/types?q=.&limit=5`. Это запись в базу: спросить человека и попросить закрыть сеансы 1С |
 | версия BSL LS в `skills/checking-bsl-code/scripts/bsl-check.mjs` | ничего — новая версия скачается при первом запуске |
+| `mcp/bsl-platform/` | ничего — новая версия сервера скачается при старте; если сервера ещё нет в MCP-конфиге — [install.md, шаг 4](install.md#4-mcp-сервер-bsl-platform) |
+| `vendor/superpowers` (ревизия подмодуля) | новые и удалённые скиллы — по строкам выше; рассказать человеку, что поменялось в Superpowers, по его `RELEASE-NOTES.md` |
+| `docs/workflow.md` | ничего — `AGENTS.md` проекта ссылается на файл; если в нём ещё нет ссылки — добавить по [install.md, шаг 5](install.md#5-agentsmd-проекта) |
 
 Сборка или загрузка расширения отказала — не откатывать клон молча: показать ошибку
 человеку. Откатить можно `git -C <клон> checkout $OLD` (клон) или вернуть ревизию
