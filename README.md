@@ -4,6 +4,7 @@
 
 | Что | Зачем |
 | --- | --- |
+| [AGENTSDEFAULT.md](templates/AGENTSDEFAULT.md) | референс `AGENTS.md` для проекта 1С; адаптация при подключении описана в [инструкции](docs/install.md#5-agentsmd-проекта) |
 | [testing-with-yaxunit](skills/testing-with-yaxunit/SKILL.md) | скилл: подключить YAxUnit, писать юнит- и интеграционные тесты в расширении тестов, запускать и читать jUnit |
 | [testing-with-vanessa](skills/testing-with-vanessa/SKILL.md) | скилл: писать сценарии Vanessa Automation по живым формам через MCP Vanessa, запускать пакетно, читать JUnit, статус и Allure |
 | [checking-bsl-code](skills/checking-bsl-code/SKILL.md) | скилл: прогнать доработку через BSL Language Server — ошибки, дефекты кода, уязвимости и стандарты 1С, только по изменённым файлам; скрипт сам скачивает закреплённую версию анализатора |
